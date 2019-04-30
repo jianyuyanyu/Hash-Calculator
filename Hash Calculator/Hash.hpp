@@ -28,11 +28,9 @@ public:
 	}
 	Hash(const Hash&) = delete;
 	Hash& operator = (const Hash&) = delete;
-	Hash(Hash&& hash) :m_alg(std::move(hash.m_alg))
+	Hash(Hash&& hash) :m_alg(std::move(hash.m_alg)), m_handle(hash.m_handle), m_len(hash.m_len)
 	{
-		m_handle = hash.m_handle;
 		hash.m_handle = NULL;
-		m_len = hash.m_len;
 		hash.m_len = 0;
 	}
 	~Hash()

@@ -153,24 +153,23 @@ void HashFile(LPTSTR path, LPCTSTR pszAlgId, HashListener* pListener)
 		OVERLAPPED oSecond{};
 		LONGLONG index = 0;
 		BOOL bRead = f.ReadAsync(pFirst.get(), len, &oFirst);
-		while (true)
+		do
 		{
 			if (!bRead) f.WaitFor();
-			if (!oFirst.InternalHigh) break;
 			index += oFirst.InternalHigh;
 			oSecond.Pointer = (PVOID)index;
 			bRead = f.ReadAsync(pSecond.get(), len, &oSecond);
 			hash.Update(pFirst.get(), (DWORD)oFirst.InternalHigh);
 			pListener->OnProgress((int)(index * 100 / length));
+			if (index == length) break;
 
 			if (!bRead) f.WaitFor();
-			if (!oSecond.InternalHigh) break;
 			index += oSecond.InternalHigh;
 			oFirst.Pointer = (PVOID)index;
 			f.ReadAsync(pFirst.get(), len, &oFirst);
 			hash.Update(pSecond.get(), (DWORD)oSecond.InternalHigh);
 			pListener->OnProgress((int)(index * 100 / length));
-		}
+		} while (index < length);
 		auto value = hash.GetValue();
 		pListener->OnCompleted(value.get(), hash.GetLength(), GetTickCount() - time);
 	}

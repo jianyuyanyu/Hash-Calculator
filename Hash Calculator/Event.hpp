@@ -14,9 +14,8 @@ public:
 	}
 	Event(const Event&) = delete;
 	Event& operator = (const Event&) = delete;
-	Event(Event&& e)
+	Event(Event&& e) :m_handle(e.m_handle)
 	{
-		m_handle = e.m_handle;
 		e.m_handle = NULL;
 	}
 	~Event()

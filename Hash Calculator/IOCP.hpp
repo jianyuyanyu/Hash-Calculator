@@ -11,10 +11,9 @@ public:
 	IOCP() :m_handle(NULL) {}
 	IOCP(const IOCP&) = delete;
 	IOCP& operator = (const IOCP&) = delete;
-	IOCP(IOCP&& iocp)
+	IOCP(IOCP&& iocp) :m_handle(iocp.m_handle)
 	{
-		iocp.m_handle = m_handle;
-		m_handle = NULL;
+		iocp.m_handle = NULL;
 	}
 	~IOCP()
 	{

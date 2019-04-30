@@ -36,7 +36,9 @@ public:
 	CProgressCtrl m_progress;
 	BOOL m_type;
 	CEdit m_edit;
+
 	static VOID NTAPI ThreadProc(PTP_CALLBACK_INSTANCE Instance, PVOID Context);
+
 	afx_msg void OnBnClickedButton1();
 	void AppendLine();
 	void AppendLine(CString line);

@@ -15,9 +15,8 @@ public:
 	}
 	File(const File&) = delete;
 	File& operator = (const File&) = delete;
-	File(File&& file)
+	File(File&& file) :m_handle(file.m_handle)
 	{
-		m_handle = file.m_handle;
 		file.m_handle = NULL;
 	}
 	~File()

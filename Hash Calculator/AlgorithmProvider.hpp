@@ -17,9 +17,8 @@ public:
 	}
 	AlgorithmProvider(const AlgorithmProvider&) = delete;
 	AlgorithmProvider& operator = (const AlgorithmProvider&) = delete;
-	AlgorithmProvider(AlgorithmProvider&& ap)
+	AlgorithmProvider(AlgorithmProvider&& ap) :m_handle(ap.m_handle)
 	{
-		m_handle = ap.m_handle;
 		ap.m_handle = NULL;
 	}
 	~AlgorithmProvider()
