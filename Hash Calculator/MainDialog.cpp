@@ -18,7 +18,7 @@
 // MainDialog 对话框
 
 
-MainDialog::MainDialog(CWnd* pParent /*=nullptr*/)
+MainDialog::MainDialog(CWnd * pParent /*=nullptr*/)
 	: CDialog(IDD_HASHCALCULATOR_DIALOG, pParent)
 	, m_type(FALSE)
 	, m_edit()
@@ -166,7 +166,7 @@ void HashFile(LPTSTR path, LPCTSTR pszAlgId, HashListener* pListener)
 			if (!bRead) f.WaitFor();
 			index += oSecond.InternalHigh;
 			oFirst.Pointer = (PVOID)index;
-			f.ReadAsync(pFirst.get(), len, &oFirst);
+			bRead = f.ReadAsync(pFirst.get(), len, &oFirst);
 			hash.Update(pSecond.get(), (DWORD)oSecond.InternalHigh);
 			pListener->OnProgress((int)(index * 100 / length));
 		} while (index < length);
@@ -187,7 +187,7 @@ VOID NTAPI  MainDialog::ThreadProc(PTP_CALLBACK_INSTANCE Instance, PVOID Context
 	ULONG_PTR lll = NULL;
 	LPTSTR path = NULL;
 	LPCTSTR alg = NULL;
-	while (pThis->m_iocp.Get(&ddd, &lll, (LPOVERLAPPED*)&path))
+	while (pThis->m_iocp.Get(&ddd, &lll, (LPOVERLAPPED*)& path))
 	{
 		pThis->SendMessage(WM_UPDATE_VALUE);
 		switch (pThis->m_type)
